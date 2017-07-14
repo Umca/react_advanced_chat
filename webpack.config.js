@@ -36,6 +36,16 @@ const webpackConfig = {
             },
         ]
     },
+    resolve:{
+        alias:{
+            'components': path.resolve(__dirname, './src/components'),
+            'containers': path.resolve(__dirname, './src/containers'),
+            'assets': path.resolve(__dirname, './src/assets'),
+            'actions': path.resolve(__dirname, './src/actions'),
+            'store': path.resolve(__dirname, './src/store'),
+            'reducers': path.resolve(__dirname, './src/reducers')
+        }
+    },
     plugins:[
         new HtmlWebpackPlugin({
             template: path.join(__dirname, './src/assets/index.html'),
