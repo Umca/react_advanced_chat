@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Chat from 'components/Chat'
+import Chat from 'containers/HocExample'
 import 'assets/styles/style.scss';
 import {AppContainer} from 'react-hot-loader';
+import ws from 'util/ws';
+
+
+window.ws = ws;
 
 const renderApp = Component =>{
     render(
@@ -13,8 +17,8 @@ const renderApp = Component =>{
     )
 }
 
-renderApp(Chat)
+renderApp(Chat);
 
 if(module.hot){
-    module.hot.accept('components/Chat', () =>renderApp(Chat))
+    module.hot.accept('containers/HocExample', () => () => renderApp(Chat))
 }
