@@ -15,17 +15,25 @@ colors.sort(function (a, b) {
 var clients = [];
 
 wss.on('connection', function (ws) {
-  clients.push(ws);
+  clients.push(Object.assign(ws, {userId: Date.now()}));
   var userName = false;
   var userColor = false;
   ws.on('message', function (msg) {
     if (!userName) {
       userName = msg;
       userColor = colors.shift();
-      ws.send(JSON.stringify({
-        type: 'color',
-        data: userColor
-      }));
+      //ws.send(JSON.stringify({
+      //  type: 'connected_new_user',
+      //  data: userName
+      //}));
+      for (var i = 0; i < clients.length; i++) {
+        clients[i].send(JSON.stringify({
+          type: 'connected_new_user',
+          data: userName,
+          userId: ws.userId
+        }));
+      }
+
       console.log(userName + ' login');
     } else {
       console.log(userName + ' say: ' + msg);
@@ -45,10 +53,18 @@ wss.on('connection', function (ws) {
     }
   });
   ws.on('close', function () {
+    console.log(23, ws)
     var index = clients.indexOf(ws);
     clients.splice(index, 1);
     if (userName !== false && userColor != false) {
       colors.push(userColor);
+    }
+    var json = JSON.stringify({
+      type: 'disconnected_user',
+      userId: ws.userId
+    });
+    for (var i = 0; i < clients.length; i++) {
+      clients[i].send(json);
     }
   });
 

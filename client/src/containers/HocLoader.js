@@ -3,38 +3,59 @@ import React, {Component} from 'react';
 
 export default function hocLoader (propName){
 
-    return (ChildComponent) => {
+   return (loaderPath) => {
 
-        return class extends Component{
+       return (ChildComponent) => {
 
-            propsIsEmpty(){
+           return class extends Component{
 
-                const prop = this.props[propName];
+               componentDidMount(){
+                   this.startTime = Date.now()
+               }
 
-                if(!prop ||
-                    (prop.hasOwnProperty('length') && !prop.length) ||
-                    !Object.keys(prop).length){
-                    return true;
-                }
-                return false;
-            }
+               componentWillReceiveProps(){
+                   this.endTime = Date.now()
+               }
 
-            loaderComponent(){
-                return(
-                    <div><img src="https://media1.giphy.com/media/3o6Zt5eJWfaJEUKYbm/200w.webp#17-grid1" alt="loader"/></div>
-                )
-            }
+               timeDifference(){
+                   return this.endTime - this.startTime;
+               }
 
-            render(){
+               propsIsEmpty(){
 
-                return(
-                    <div style={{background: '#fff', color:'black', padding: '200px', }}>
-                        {this.propsIsEmpty() ? this.loaderComponent() : <ChildComponent {...this.props} />}
-                    </div>
-                )
-            }
-        }
-    }
+                   const prop = this.props[propName];
+
+                   if(!prop ||
+                       (prop.hasOwnProperty('length') && !prop.length) ||
+                       !Object.keys(prop).length){
+                       return true;
+                   }
+                   return false;
+               }
+
+               loaderComponent(){
+                   return(
+                       <div><img src={loaderPath} alt="loader"/></div>
+                   )
+               }
+
+               render(){
+
+                   const newProp =  {
+                       timeDiff: this.timeDifference()
+                   }
+
+                   return(
+                       <div style={{background: '#fff', color:'black', padding: '50px', }}>
+                           {this.propsIsEmpty() ? this.loaderComponent() : <ChildComponent {...this.props}  {...newProp} />}
+                       </div>
+                   )
+               }
+           }
+       }
+   }
+
+
 
 
 }

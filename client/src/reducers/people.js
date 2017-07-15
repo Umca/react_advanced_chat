@@ -1,3 +1,5 @@
+import constants from 'constants/index';
+
 const initialState = [
     {name: "Darth", src: ""},
     {name: "Lucke", src: ""},
@@ -5,15 +7,19 @@ const initialState = [
     {name: "Leya", src: ""},
     {name: "R2D2", src: ""},
     {name: "Han Solo", src: ""},
-    {name: "Chubacka", src: ""},
+    {name: "Chubacka", src: ""}
 
-]
-const peopleReducer = (state = initialState, action)=>{
+];
+const peopleReducer = (state = [], action)=>{
     switch(action.type){
-        case "ADD_NEW_USER": 
-            return state.concat({name:'CTriPO', src:""})
+        case constants.CONNECTED_NEW_USER:
+            return state.concat({name: action.username, src:"", id: action.userId})
+        case constants.DISCONNECTED_USER:
+            return state.filter((user) => user.id !== action.userId)
     }
     return state;
 }
+
+
 
 export default peopleReducer;

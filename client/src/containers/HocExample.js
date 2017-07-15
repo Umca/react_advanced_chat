@@ -11,11 +11,11 @@ export default class HocExample extends Component{
     }
 
     componentWillMount(){
-        setTimeout(() => {
+
             fetch('http://api.fixer.io/latest?base=USD')
                 .then((res) => res.json())
                 .then((data) => this.setState({currency : data}))
-        }, 1500)
+
     }
 
     render(){

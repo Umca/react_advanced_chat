@@ -45,7 +45,8 @@ const webpackConfig = {
             'actions': path.resolve(__dirname, './src/actions'),
             'store': path.resolve(__dirname, './src/store'),
             'reducers': path.resolve(__dirname, './src/reducers'),
-            'util': path.resolve(__dirname, './src/util')
+            'util': path.resolve(__dirname, './src/util'),
+            'constants': path.resolve(__dirname, './src/constants')
         }
     },
     plugins:[
