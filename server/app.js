@@ -15,7 +15,12 @@ colors.sort(function (a, b) {
 var clients = [];
 
 wss.on('connection', function (ws) {
-  clients.push(Object.assign(ws, {userId: Date.now()}));
+  let userId = Date.now();
+  clients.push(Object.assign(ws, {userId: userId}));
+  ws.send(JSON.stringify({
+    type: 'login',
+    id: userId
+  }))
   var userName = false;
   var userColor = false;
   ws.on('message', function (msg) {
@@ -43,6 +48,7 @@ wss.on('connection', function (ws) {
         author: userName,
         color: userColor
       };
+      console.log(1000, obj)
       var json = JSON.stringify({
         type: 'message',
         data: obj

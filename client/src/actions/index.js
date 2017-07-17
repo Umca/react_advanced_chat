@@ -15,11 +15,12 @@ export const disconnectedUser = (userId)=>{
     }
 }
 
-export const newMessage = ( author, text, time) => {
+export const newMessage = ( obj ) => {
     return{
         type: constants.NEW_MESSAGE,
-        author: author,
-        text: text,
-        time: time
+        author: obj.author,
+        text: obj.text,
+        time: obj.time,
+        color: obj.color
     }
 }

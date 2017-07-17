@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
  export default class MessageItem extends Component {
     render(){
-        const {author, text} = this.props;
+        const {author, text, color} = this.props;
         return(
             <ul>
                 <li class="clearfix">
@@ -13,7 +13,7 @@ import React, {Component} from 'react';
                         <span class="message-data-name" >{author}</span> <i class="fa fa-circle me"></i>
 
                     </div>
-                    <div class="message other-message float-right">
+                    <div class="message other-message float-right" style={{backgroundColor: color }}>
                         {text}
                     </div>
                 </li>

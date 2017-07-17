@@ -13,10 +13,8 @@ export default ((url)=>{
     };
 
     ws.onmessage = (message) => {
-        console.log(message);
-        const messageObj = JSON.parse(message.data);
 
-        console.log(13, messageObj);
+        const messageObj = JSON.parse(message.data);
 
         switch(messageObj.type){
             case "connected_new_user":
@@ -26,7 +24,7 @@ export default ((url)=>{
                 dispatch(disconnectedUser(messageObj.userId));
                 break;
             case "message":
-                dispatch(newMessage(messageObj.userId, messageObj.author, messageObj.text,messageObj.time))
+                dispatch(newMessage(messageObj.data))
         }
     };
 
@@ -44,6 +42,8 @@ export default ((url)=>{
         ws.send(message);
         reconnectCount = 0;
     }
+
+
 
     return {emit};
 

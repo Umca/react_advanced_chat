@@ -64,7 +64,8 @@ const webpackConfig = {
         historyApiFallback: true,
         hot: true,
         host:'0.0.0.0'
-    }
+    },
+    devtool: 'source-map'
 }
 
 module.exports = webpackConfig;
